@@ -1,0 +1,16 @@
+stages:
+- stage: Deployment
+  jobs:
+  - deployment: 'DeploymentJob'
+    environment: 'env2.default'
+    strategy:
+      runOnce:
+        deploy:
+          steps:               
+          - task: Kubernetes@1
+            displayName: 'kubectl get'
+            inputs:
+              connectionType: 'Kubernetes Service Connection'    
+              namespace: 'default'          
+              command: get
+              arguments: pods
